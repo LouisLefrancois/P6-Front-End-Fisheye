@@ -1,17 +1,61 @@
+// template des photographes (dispositions sur la homepage)
+
+// eslint-disable-next-line no-unused-vars
 function photographerTemplate(data) {
-    const { name, portrait } = data;
+  // Déstructuration de l'objet data pour extraire les propriétés nécessaires
+  const { name, city, country, tagline, price, portrait, id } = data;
 
-    const picture = `assets/photographers/${portrait}`;
+  // Construction du chemin de l’image du photographe
+  const picture = `assets/photographers/${portrait}`;
 
-    function getUserCardDOM() {
-        const article = document.createElement( 'article' );
-        const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
-        const h2 = document.createElement( 'h2' );
-        h2.textContent = name;
-        article.appendChild(img);
-        article.appendChild(h2);
-        return (article);
-    }
-    return { name, picture, getUserCardDOM }
+  // Génération dynamique de l’URL vers la page du photographe
+  const photographerPageURL = `photographer.html?id=${id}`;
+
+  // Fonction qui retourne la carte DOM du photographe
+  function getUserCardDOM() {
+    const article = document.createElement("article");
+
+    // Création d’un lien cliquable qui entoure l’image et le nom
+    const link = document.createElement("a");
+    link.setAttribute("href", photographerPageURL);
+    link.classList.add("photographer-link");
+
+    // Création de l’image avec description alternative pour l’accessibilité
+    const img = document.createElement("img");
+    img.setAttribute("src", picture);
+    img.setAttribute("alt", `Portrait de ${name}`);
+
+    // Création du nom du photographe (h2)
+    const h2 = document.createElement("h2");
+    h2.textContent = name;
+    h2.setAttribute("tabindex", "0");
+
+    // Ajout de l’image et du nom dans le lien
+    link.appendChild(img);
+    link.appendChild(h2);
+
+    // Création et insertion de la ville/pays, tagline et prix
+    const h3 = document.createElement("h3");
+    h3.textContent = city + ", " + country;
+    h3.setAttribute("tabindex", "0");
+
+    const p = document.createElement("p");
+    p.textContent = tagline;
+    p.setAttribute("tabindex", "0");
+
+    const span = document.createElement("span");
+    span.textContent = `${price}€/jour`;
+    span.setAttribute("tabindex", "0");
+
+    // Ajouter tous les éléments dans l'article
+    article.appendChild(link); // image + nom
+    article.appendChild(h3); // localisation
+    article.appendChild(p); // slogan
+    article.appendChild(span); // tarif
+
+    return article;
+  }
+
+  // Retourne les infos utiles + la fonction qui génère la carte DOM
+  return { name, city, country, tagline, price, picture, id, getUserCardDOM };
 }

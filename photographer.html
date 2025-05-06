@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/photographer.css" rel="stylesheet" type="text/css" />
@@ -13,31 +13,128 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="/">
+        <img
+          src="assets/images/logo.png"
+          class="logo"
+          alt="Fisheye Home page"
+        />
+      </a>
     </header>
     <main id="main">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">
+        <!-- <button class="contact_button" onclick="displayModal()">
           Contactez-moi
-        </button>
+        </button> -->
       </div>
+
+      <!-- filtre -->
+      <div class="container-filter">
+        <label for="filter-select" class="trierpar">Trier par</label>
+        <select
+          name="filters"
+          id="filter-select"
+          class="container-filter-select"
+          aria-expanded="true"
+          role="listbox"
+          onchange="filterMedia()"
+        >
+          <option value="popularity" aria-expanded="false">Popularité</option>
+          <option value="title" aria-expanded="false">Titre</option>
+        </select>
+      </div>
+
       <div class="media-gallery"></div>
     </main>
-    <div id="contact_modal">
-      <div class="modal">
-        <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
-        </header>
-        <form>
-          <div>
-            <label>Prénom</label>
-            <input />
-          </div>
-          <button class="contact_button">Envoyer</button>
-        </form>
+
+    <div class="detailsfixed"></div>
+
+    <div class="modal-overlay" id="modal-overlay" tabindex="-1">
+      <div
+        id="contact_modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div class="modal">
+          <header>
+            <h2>Contactez-moi</h2>
+            <img
+              src="assets/icons/close.svg"
+              alt="Fermer le formulaire de contact"
+              role="button"
+              tabindex="0"
+              id="closeModalIcon"
+              onclick="closeModal()"
+              aria-label="Fermer le formulaire"
+            />
+          </header>
+          <div class="nameduprod"></div>
+
+          <form>
+            <div>
+              <label for="first_name" id="3">Prénom</label>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                aria-labelledby="3"
+              />
+
+              <label for="last_name" id="5">Nom</label>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                aria-labelledby="5"
+              />
+
+              <label for="email" id="7">Email</label>
+              <input type="email" id="email" name="email" aria-labelledby="7" />
+
+              <label for="your_message">Votre message</label>
+              <textarea id="your_message" name="your_message"></textarea>
+            </div>
+            <button type="submit" class="contact_button" aria-label="Send">
+              Envoyer
+            </button>
+          </form>
+        </div>
       </div>
     </div>
+
+    <!-- lightbox -->
+
+    <div
+      id="lightbox"
+      class="lightbox hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Media viewer"
+    >
+      <div class="containerlightbox">
+        <div class="lightbox-close">
+          <img
+            src="assets/icons/close-red.svg"
+            class="closeIcon"
+            alt="Close dialog"
+            role="button"
+            tabindex="0"
+            onclick="closeLightbox()"
+            aria-label="Close dialog"
+          />
+        </div>
+        <div class="lightbox-content">
+          <button class="lightbox-prev" aria-label="Previous image"><</button>
+          <div class="lightbox-media-container">
+            <div class="lightbox-media"></div>
+            <p tabindex="0" class="lightbox-title"></p>
+          </div>
+          <button class="lightbox-next" aria-label="Next image">></button>
+        </div>
+      </div>
+    </div>
+
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
     <link

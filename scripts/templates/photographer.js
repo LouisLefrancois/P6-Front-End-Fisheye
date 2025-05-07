@@ -1,7 +1,6 @@
 // template des photographes (dispositions sur la homepage)
 
-// eslint-disable-next-line no-unused-vars
-function photographerTemplate(data) {
+export function photographerTemplate(data) {
   // Déstructuration de l'objet data pour extraire les propriétés nécessaires
   const { name, city, country, tagline, price, portrait, id } = data;
 

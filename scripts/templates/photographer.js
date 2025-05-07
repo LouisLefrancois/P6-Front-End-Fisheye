@@ -12,8 +12,6 @@ export function photographerTemplate(data) {
 
   // Fonction qui retourne la carte DOM du photographe
   function getUserCardDOM() {
-    const article = document.createElement("article");
-
     // Création d’un lien cliquable qui entoure l’image et le nom
     const link = document.createElement("a");
     link.setAttribute("href", photographerPageURL);
@@ -46,6 +44,7 @@ export function photographerTemplate(data) {
     span.textContent = `${price}€/jour`;
     span.setAttribute("tabindex", "0");
 
+    const article = document.createElement("article");
     // Ajouter tous les éléments dans l'article
     article.appendChild(link); // image + nom
     article.appendChild(h3); // localisation

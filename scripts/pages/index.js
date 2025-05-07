@@ -1,3 +1,6 @@
+// Importation de la fonction de template pour les photographes
+import { photographerTemplate } from "../templates/photographer.js";
+
 // Récupération des données des photographes
 async function getPhotographers() {
   try {
@@ -23,7 +26,6 @@ async function displayData(photographers) {
   // Création et insertion d'une carte HTML pour chaque photographe
   photographers.forEach((photographer) => {
     // Appel du modèle de template pour générer la structure HTML
-    // eslint-disable-next-line no-undef
     const photographerModel = photographerTemplate(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM); // Insertion dans le DOM

@@ -277,7 +277,42 @@ async function fetchData() {
   }
 }
 
-// Aaffiche dynamiquement le profil d’un photographe et ses médias (page photographe)
+// Créer des objets vidéo ou image
+function mediaFactory(type, path, title) {
+  if (type === "video") {
+    return new Video(path, title);
+  } else if (type === "image") {
+    return new Image(path, title);
+  }
+}
+
+// Classe Video pour gérer les vidéos
+class Video {
+  constructor(path, title) {
+    this.path = path;
+    this.title = title;
+  }
+
+  // Méthode pour obtenir le HTML d'une vidéo
+  getMediaContent() {
+    return `<video><source src="${this.path}" type="video/mp4"></video>`;
+  }
+}
+
+// Classe Image pour gérer les images
+class Image {
+  constructor(path, title) {
+    this.path = path;
+    this.title = title;
+  }
+
+  // Méthode pour obtenir le HTML d'une image
+  getMediaContent() {
+    return `<img src="${this.path}" alt="${this.title}" />`;
+  }
+}
+
+// Fonction principale pour afficher le photographe et ses médias
 function displayPhotographer(photographerData, photographerMedia) {
   // Sélectionne la section de l'en-tête du photographe dans le DOM
   const photographerSection = document.querySelector(".photograph-header");
@@ -297,21 +332,18 @@ function displayPhotographer(photographerData, photographerMedia) {
     const mediaElement = document.createElement("div");
     mediaElement.classList.add("media-item");
 
-    let mediaContent = "";
+    const mediaPath = `assets/images/SamplePhotos/${
+      photographerData.name.split(" ")[0]
+    }/${media.video || media.image}`;
 
-    // Si le média est une vidéo, on construit une balise <video>
+    // Utilise la Factory pour créer le bon type de média (vidéo ou image)
+    let mediaContent = "";
     if (media.video) {
-      const videoPath = `assets/images/SamplePhotos/${
-        photographerData.name.split(" ")[0]
-      }/${media.video}`;
-      mediaContent = `<video><source src="${videoPath}" type="video/mp4"></video>`;
-    }
-    // Sinon si c'est une image, on construit une balise <img>
-    else if (media.image) {
-      const imagePath = `assets/images/SamplePhotos/${
-        photographerData.name.split(" ")[0]
-      }/${media.image}`;
-      mediaContent = `<img src="${imagePath}" alt="${media.title}" />`;
+      const video = mediaFactory("video", mediaPath, media.title);
+      mediaContent = video.getMediaContent();
+    } else if (media.image) {
+      const image = mediaFactory("image", mediaPath, media.title);
+      mediaContent = image.getMediaContent();
     }
 
     // Vérifie si le média est déjà liké dans l'état local (mediaLikesState)
